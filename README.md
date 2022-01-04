@@ -9,6 +9,8 @@ I dette repositoriet ligger det et eksempel-prosjekt som implementerer et lignen
 
 TODO intro til venv
 
+TODO opprette venv for prosjektet (putte all setup av venv osv. i et skript?)
+
 Hvis du bruker visual stuido code er det mulig at programmet plukker opp venv automatisk. Da skal terminalvindu du åpner i vscode automatisk bruker venv. Hvis ikke kan du kjøre:
 
 ```
@@ -29,3 +31,7 @@ pip          20.2.3
 setuptools   49.2.1
 Werkzeug     2.0.2
 ```
+
+## Starte flask-serveren
+
+Nå som vi har flask installert kan vi starte opp serveren.
