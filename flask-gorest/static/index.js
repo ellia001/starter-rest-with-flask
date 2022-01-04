@@ -1,4 +1,4 @@
-const gorest = "https://gorest.co.in/public/v1/"
+const gorest = "api/"
 const gorestUsers = gorest + "users"
 
 const token = "PASTE TOKEN HER"
