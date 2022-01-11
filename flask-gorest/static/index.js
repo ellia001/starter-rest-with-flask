@@ -22,17 +22,20 @@ function handleGetPosts() {
     console.log("Get Posts called, function TODO")
 }
 
-function handleCreateUser() {
-    form = document.getElementById("createUserForm")
+function handleSubmit(event, form) {
+    event.preventDefault()
+    data = new FormData(form) // omgjør en form til et javascript-form-object
+    object = Object.fromEntries(data.entries())
 
     // Setter opp headers
     const headers = new Headers();
     headers.append("Authorization", "Bearer " + token)
+    headers.append("Content-Type", "application/json")
 
-    fetch(gorestUsers, {
+    fetch(form.action, {
         "method" : "POST",
         "headers": headers,
-        "body": new FormData(form)
+        "body": JSON.stringify(object) // et javascript-object kan vi gjøre til JSON med json-stringify
     }).then(function(response) {
         // Håndterer responsen
 
