@@ -82,15 +82,41 @@ Legg merke til at det er mer enn bare Flask her. Det er fordi Flask har sine egn
 
 Nå som vi har flask installert kan vi starte opp serveren.
 
+Først inn i mappen hvor koden ligger:
+
 ```
-cd flask-gorest && FLASK_ENV=development flask run
+cd flask-gorest
 ```
 
-Konfigurasjonen `FLASK_ENV=development` gjør at flask-serveren automatisk laster på nytt hver gang vi lagrer endringer i `app.py`.
+Så kan vi starte serveren med `run` kommandoen:
 
-Flask prøver å starte `app.py` hvis vi ikke spesifiserer navnet på filen.
+```
+FLASK_ENV=development flask run
+```
+
+Konfigurasjonen `FLASK_ENV=development` gjør at flask-serveren automatisk laster på nytt hver gang vi lagrer endringer i `app.py`. Vi trenger ikke spesifisere at serveren heter app.py, fordi Flask leter etter en fil som heter akkurat `app.py` hvis ikke spesifiserer noe.
+
+Vi får da se i terminalen:
+```
+ELVNB9571:flask-gorest andoa027$ FLASK_ENV=development flask run
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 123-871-371
+```
+
+Trykker vi på lenken etter "Running on" kommer vi til nettadressen hvor serveren kjører, og vi får se nettside-klienten.
+
+Her kan vi merkes oss at vi skal bruke serveren til to ting: servere nettsiden (html+javascript) _og_ svare på REST APIet. Disse to oppgavene _må_ ikke utføres av samme server (men som noen kanskje har erfart får man fort problemer med CORS om man ikke gjør det). I forrige oppgave hadde vi ikke `index.html` i noen server, og gjorde kall mot gorest.co.in. Vi kunne like godt servet `index.html` fra en annen server, og fortsatt gjort kall mot gorest.co.in.
+
+### Sjekk at serveren kjører
+
+Nettsiden er basert på klienten fra klient-oppgaven.
 
 ## GET User
+
 
 ## Oppgave: Implementere GET user
 
