@@ -13,7 +13,7 @@ posts = {}
 def add_user(user):
     user_id = len(users)
     user.update("id", user_id)
-    users.update(user_id, user)
+    users[user_id] = user
 
 def add_post(post):
     post_id = len(posts)
@@ -51,3 +51,9 @@ def create_user():
     users.append(content)
     print(content)
     return {}
+
+def get_posts():
+    pass # FYLL INN HER
+
+def create_post():
+    pass # FYLL INN HER
