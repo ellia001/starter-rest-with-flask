@@ -6,21 +6,16 @@ from flask.helpers import safe_join
 app = Flask(__name__)
 static = safe_join(os.path.dirname(__file__), 'static')
 
-users = {}
+# PSEDUO DATABASE:
+users = []
+posts = []
+def add_element(database, item):
+    # Find new id by getting length of list, and add id to new item:
+    item["id"] = len(database)
+    database.append(item)
+    return item
 
-posts = {}
-
-def add_user(user):
-    user_id = len(users)
-    user.update("id", user_id)
-    users[user_id] = user
-
-def add_post(post):
-    post_id = len(posts)
-    posts.update("id", post_id)
-    users.update(post_id, post)
-
-add_user({"name": "admin", "email": "admin@flask-rest.com", "gender": "female", "status": "active"})
+add_element(users, {"name": "admin", "email": "admin@flask-rest.com", "gender": "female", "status": "active"})
 
 def wrap_data(data):
     return {"meta": {}, "data": data}
@@ -48,9 +43,9 @@ def get_users():
 @app.route('/api/users', methods=["POST"])
 def create_user():
     content = request.get_json()
-    users.append(content)
+    created_user = add_element(users, content)
     print(content)
-    return {}
+    return wrap_data(created_user)
 
 def get_posts():
     pass # FYLL INN HER
