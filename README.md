@@ -4,24 +4,19 @@ Nå skal vi se på hvordan et REST API ser ut i serverens kode. Vi skal bruke et
 
 I dette repositoriet ligger det et eksempel-prosjekt som implementerer et lignende API som gorest-nettsiden. 
 
+## Avhengigheter og Virtual Environment
 
-## Avhengigheter og Virual Environment
-
-TODO gjøre denne delen optional?
-
-Flask er et rammeverk som ikke er inkludert i Python, så derfor må vi installere det. Vi kaller ofte at koden har en avhengighet. Noen av dere har kanskje installert sånne avhengigheter med `pip`. 
+Flask er et rammeverk som ikke er inkludert i Python, så derfor må vi installere det. Vi kaller det at koden har en avhengighet ("dependency"). Noen av dere har kanskje installert sånne avhengigheter med `pip`. 
 
 Når man har flere prosjekter på maskinen sin, blir det fort rotete om man skal ha alle avhenighetene for alle prosjekter installert samtidig. Det blir komplisert å holde styr på hvilken kode som trenger hvilken avhengighet, og kanskje noe kode trenger forskjellige versjoner av samme avhengighet!
 
-TODO oppklare virtualenv vs venv?
-
-Det finnes flere verktøy for å håndtere dette problemet i python. Verktøyet som er innebygget heter "venv", en forkortelse for "virtual environment". Det lager et eget ("virtuelt") python-miljø per prosjekt som kun inneholder akkurat det prosjektet trenger. 
+Det finnes flere verktøy for å håndtere dette problemet i python (og andre programmeringsspråk har egne verktøy). Verktøyet som er innebygget i Python heter "venv", en forkortelse for "virtual environment". Det lager et eget ("virtuelt") python-miljø per prosjekt som kun inneholder akkurat det prosjektet trenger. 
 
 Nå skal vi opprette et venv for dette prosjektet, og installere Flask inn i det miljøet.
 
 ### Opprette nytt venv
 
-For å opprette et nytt venv, bruker vi modulen `venv`, sammen med plasseringen hvor vi skal plassere det nye miljøet. Det enkleste er å bare legge venv inne i mappen hvor prosjektet ligger. Åpne opp et terminalvindu (enten gjennom vs code eller separat), og dobbelsjekk at den aktive mappen er den vi forventer med `pwd`:
+For å opprette et nytt venv, sender vi bare hvor vi skal plassere det ny venv inn i modulen `venv`. Det enkleste er plassere venv inne i mappen hvor prosjektet ligger. Åpne opp et terminalvindu (enten gjennom vs code eller separat), og dobbelsjekk at den aktive mappen er den vi forventer med `pwd`:
 
 ```shell
 pwd
@@ -42,7 +37,7 @@ Hvis du bruker visual stuido code er det mulig at programmet plukker opp venv au
 source venv/bin/activate
 ```
 
-Lister vi nå ut alle installerte avhengigheter med `pip list` skal vi nå se en "tom" liste:
+Lister vi nå ut alle installerte avhengigheter med `pip list` skal vi se en "tom" liste:
 
 ```
 (venv) ELVNB9571:test-env andoa027$ pip list
@@ -86,8 +81,6 @@ Legg merke til at det er mer enn bare Flask her. Det er fordi Flask har sine egn
 ## Starte flask-serveren
 
 Nå som vi har flask installert kan vi starte opp serveren.
-
-TODO cd into app-dir
 
 ```
 cd flask-gorest && FLASK_ENV=development flask run
