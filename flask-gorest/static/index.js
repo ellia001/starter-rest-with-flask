@@ -13,7 +13,8 @@ function handleGetUsers() {
 
         // Vi henter ut json-bodyen i responsen med .json()
         response.json().then(function(json) {
-            console.log(json)
+            document.getElementById("getUsersResponseField").value = json
+            
         })
     });
 }
