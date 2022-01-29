@@ -146,8 +146,23 @@ def _static(path):
 
 ### GET users
 
+Nedenfor endepunktene for statiske filer, ligger rest-endepunktene.
+
+Her har vi metoden som håndtere GET users. Igjen har vi en app.route som sier at det er urlen 'api/users' denne metoden skal håndtere. Vi må også spesifisere hvilke HTTP-metoder som skal gjelde for denne python-metoden med `methods=["GET"]`. På denne måten kan samme url bli håndtert av forskjellige python-metoder, avhengig av hvilken HTTP-metoden som er i requesten.
+
+Hvis vi ikke spesifiserer noen metode vil Flask annta at det skal være GET, det er derfor `_home` og `_static` ikke trenger noe methods argument. `get_users()` må ikke ha det heller, men jeg synes det er bedre for å enklere skille mellom `get_users()` og `create_user()`.
+
+Så returnerer vi listen med brukere, pakket inn et dictionary. I denne versjonen av vi ikke en ordentlig database, bare en liste med python dictionaries. Et python-dictionary har samme form som et JSON-objekt, og derfor vil automatisk konvertere til JSON når vi returnerer et dictionary.
+
+```python
+@app.route('/api/users', methods=["GET"])
+def get_users():
+    return wrap_data(users)
+```
 
 ### Oppgave: Implementere GET posts
+
+Din oppgave er å implementere 
 
 ### POST users
 
