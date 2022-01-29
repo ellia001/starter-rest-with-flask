@@ -109,7 +109,7 @@ ELVNB9571:flask-gorest andoa027$ FLASK_ENV=development flask run
 
 Trykker vi på lenken etter "Running on" kommer vi til nettadressen hvor serveren kjører, og vi får se nettside-klienten.
 
-Her kan vi merkes oss at vi skal bruke serveren til to ting: servere nettsiden (html+javascript) _og_ svare på REST APIet. Disse to oppgavene _må_ ikke utføres av samme server (men som noen kanskje har erfart får man fort problemer med CORS om man ikke gjør det). I forrige oppgave hadde vi ikke `index.html` i noen server, og gjorde kall mot gorest.co.in. Vi kunne like godt servet `index.html` fra en annen server, og fortsatt gjort kall mot gorest.co.in.
+Her kan vi merke oss at vi skal bruke serveren til to ting: servere nettsiden (html+javascript) _og_ svare på REST APIet. Disse to oppgavene _må_ ikke utføres av samme server (men som noen kanskje har erfart får man fort problemer med CORS om man ikke gjør det). I forrige oppgave hadde vi ikke `index.html` i noen server, og gjorde kall mot gorest.co.in. Vi kunne like godt servet `index.html` fra en annen server, og fortsatt gjort kall mot gorest.co.in.
 
 ### Sjekk at serveren kjører
 
