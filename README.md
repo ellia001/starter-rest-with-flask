@@ -113,13 +113,42 @@ Her kan vi merke oss at vi skal bruke serveren til to ting: servere nettsiden (h
 
 ### Sjekk at serveren kjører
 
-Nettsiden er basert på klienten fra klient-oppgaven.
+Nettsiden er basert på klienten fra klient-oppgaven. Den har implementert rest-kall mot serveren for GET og POST for både api/users og api/posts. (Det er blitt løst på en måte som bruker samme javascript for alle GET og alle POST, ta gjerne en titt på det, men det er ikke poenget med denne oppgaven.)
 
-## GET User
+Gå inn på serveren og trykk på knappene for å se hvordan det virker.
 
 
-## Oppgave: Implementere GET user
+## Vi ser på server implementasjonen
 
-## POST user
+Kallene går nå fra nettsiden til flask-serveren. Hvis du åpner filen `app.py` kan du se hvordan dette er implementert.
 
-## Oppgave: Implementere POST user
+### Statiske filer som HTML og Javascript
+
+Som sagt er det serveren som sender selve nettsiden til nettleseren. Når du åpner http://127.0.0.1:5000/ i nettleseren din går det GET til "/" på serveren.
+
+`@app.route()` er kommandoen i Flask som knytter urlen på Requesten fra nettleseren til hvilken metode som skal kjøres. Så `@app.route('/')` knytter '/', altså ingen url, til metoden `_home()`. Den metoden bruker funksjonen `send_from_directory()` til å sende filen `index.html` fra mappen som heter "static" (variabelen `static` er definert i toppen av filen). Det er dette som gjør at vi får ser nettsiden når vi åpner adressen serveren kjører på.
+
+Når vi skriver <> inne i en route, som i `@app.route('/<path:path>')`, kan vi bruke verdier fra urlen i metoden. Så i metoden `_static(path)` tar vi urlen som kommer inn, f.eks. '/index.js', og leter etter en fil med det navnet inne i static-mappen. Det betyr at vi ikke trenger en egen route for '/index.js', og hvis vi legger til en style.css-fil i static-mappen og refererer til den fra index.html vil det bare virke, uten noen ny route.
+
+Hvis dere skal ha en nettside tilknyttet flask-serveren deres er disse to metodene veldig nyttige.
+
+```python
+@app.route('/')
+def _home():
+    """Serve index.html at the root url"""
+    return send_from_directory(static, 'index.html')
+
+@app.route('/<path:path>')
+def _static(path):
+    """Serve content from the static directory"""
+    return send_from_directory(static, path)
+```
+
+### GET users
+
+
+### Oppgave: Implementere GET posts
+
+### POST users
+
+### Oppgave: Implementere POST posts
