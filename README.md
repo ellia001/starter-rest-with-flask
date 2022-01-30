@@ -113,7 +113,9 @@ Her kan vi merke oss at vi skal bruke serveren til to ting: servere nettsiden (h
 
 ### Sjekk at serveren kjører
 
-Nettsiden er basert på klienten fra klient-oppgaven. Den har implementert rest-kall mot serveren for GET og POST for både api/users og api/posts. (Det er blitt løst på en måte som bruker samme javascript for alle GET og alle POST, ta gjerne en titt på det, men det er ikke poenget med denne oppgaven.)
+Nettsiden er basert på klienten fra klient-oppgaven. Den har implementert rest-kall mot serveren for GET og POST for både api/users og api/posts. 
+
+(Funfact: Det er blitt løst på en måte som bruker samme javascript for alle GET og alle POST, ta gjerne en titt på det, men det er ikke poenget med denne oppgaven.)
 
 Gå inn på serveren og trykk på knappene for å se hvordan det virker. Se i terminalen hvor du har startet serveren hva som skjer på serveren.
 
