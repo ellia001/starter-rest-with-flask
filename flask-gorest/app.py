@@ -6,21 +6,16 @@ from flask.helpers import safe_join
 app = Flask(__name__)
 static = safe_join(os.path.dirname(__file__), 'static')
 
-users = {}
+# PSEDUO DATABASE:
+users = []
+posts = []
+def add_element(database, item):
+    # Find new id by getting length of list, and add id to new item:
+    item["id"] = len(database)
+    database.append(item)
+    return item
 
-posts = {}
-
-def add_user(user):
-    user_id = len(users)
-    user.update("id", user_id)
-    users[user_id] = user
-
-def add_post(post):
-    post_id = len(posts)
-    posts.update("id", post_id)
-    users.update(post_id, post)
-
-add_user({"name": "admin", "email": "admin@flask-rest.com", "gender": "female", "status": "active"})
+add_element(users, {"name": "admin", "email": "admin@flask-rest.com", "gender": "female", "status": "active"})
 
 def wrap_data(data):
     return {"meta": {}, "data": data}
@@ -33,13 +28,14 @@ def _home():
 @app.route('/<path:path>')
 def _static(path):
     """Serve content from the static directory"""
-    if os.path.isdir(safe_join(static, path)):
-        path = os.path.join(path, 'index.html')
     return send_from_directory(static, path)
 
 @app.route('/api/hello-world')
 def hello():
     return 'Hello, World!'
+
+#  USERS Resource:
+user_fields = ["name", "email", "gender", "status"]
 
 @app.route('/api/users', methods=["GET"])
 def get_users():
@@ -48,9 +44,21 @@ def get_users():
 @app.route('/api/users', methods=["POST"])
 def create_user():
     content = request.get_json()
-    users.append(content)
+
+    # Gå gjennom alle feltene vi krever i en user ressurs:
+    for field in user_fields:
+        # Hvis feltet ikke er med i input, eller det er en tom streng
+        if field not in content.keys or content[field] == "":
+            # Gi feilmelding i 400-serien, BAD CLIENT INPUT
+            return {"message", "missing field: %s".format(field)}, 400
+
+    # Legg til ny bruker i bruker-database
+    created_user = add_element(users, content)
     print(content)
-    return {}
+    # Returner den ny-opprettede brukeren, med statuskode 201 CREATED
+    return wrap_data(created_user), 201
+
+# POSTS Resource:
 
 def get_posts():
     pass # FYLL INN HER

@@ -3,24 +3,21 @@ const gorestUsers = gorest + "users"
 
 const token = "PASTE TOKEN HER"
 
-function handleGetUsers() {
-    console.log("Get Users Called");
+function handleGet(endpoint, responseFieldId) {
+    console.log("Get Called for endpoint:" + endpoint);
 
-    fetch(gorestUsers, {
+    fetch(endpoint, {
         "method" : "GET"
     }).then(function(response) {
         // Håndterer responsen
 
         // Vi henter ut json-bodyen i responsen med .json()
         response.json().then(function(json) {
-            document.getElementById("getUsersResponseField").value = json
+            console.log(json)
+            document.getElementById(responseFieldId).value = JSON.stringify(json)
             
         })
     });
-}
-
-function handleGetPosts() {
-    console.log("Get Posts called, function TODO")
 }
 
 function handleSubmit(event, form) {

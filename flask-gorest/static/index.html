@@ -15,7 +15,7 @@
 
         <h2>Get User</h2>
         <div class="row">
-            <button onclick="handleGetUsers()">Get Users</button>
+            <button onclick="handleGet('api/users', 'getUsersResponseField')">Get Users</button>
         </div>
 
         <div>
@@ -24,9 +24,12 @@
         </div>
 
         <h2>Get Posts</h2>
-        <p><strong>TODO</strong></p>
         <div class="row">
-            <button onclick="handleGetPosts()">Get Posts</button>
+            <button onclick="handleGet('api/posts', 'getPostsResponseField')">Get Posts</button>
+        </div>
+        <div>
+            <h3>GET /posts Response:</h3>
+            <textarea id="getPostsResponseField"></textarea>
         </div>
 
 
