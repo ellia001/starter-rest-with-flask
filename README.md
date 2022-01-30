@@ -115,7 +115,7 @@ Her kan vi merke oss at vi skal bruke serveren til to ting: servere nettsiden (h
 
 Nettsiden er basert på klienten fra klient-oppgaven. Den har implementert rest-kall mot serveren for GET og POST for både api/users og api/posts. (Det er blitt løst på en måte som bruker samme javascript for alle GET og alle POST, ta gjerne en titt på det, men det er ikke poenget med denne oppgaven.)
 
-Gå inn på serveren og trykk på knappene for å se hvordan det virker.
+Gå inn på serveren og trykk på knappene for å se hvordan det virker. Se i terminalen hvor du har startet serveren hva som skjer på serveren.
 
 
 ## Vi ser på server implementasjonen
@@ -148,9 +148,9 @@ def _static(path):
 
 Nedenfor endepunktene for statiske filer, ligger rest-endepunktene.
 
-Her har vi metoden som håndtere GET users. Igjen har vi en app.route som sier at det er urlen 'api/users' denne metoden skal håndtere. Vi må også spesifisere hvilke HTTP-metoder som skal gjelde for denne python-metoden med `methods=["GET"]`. På denne måten kan samme url bli håndtert av forskjellige python-metoder, avhengig av hvilken HTTP-metoden som er i requesten.
+Øverst har vi metoden som håndtere GET users. Igjen har vi en app.route som sier at det er urlen 'api/users' denne metoden skal håndtere. Vi må også spesifisere hvilke HTTP-metoder som skal gjelde for denne python-metoden med `methods=["GET"]`. På denne måten kan samme url bli håndtert av forskjellige python-metoder, avhengig av hvilken HTTP-metoden som er i requesten.
 
-Hvis vi ikke spesifiserer noen metode vil Flask annta at det skal være GET, det er derfor `_home` og `_static` ikke trenger noe methods argument. `get_users()` må ikke ha det heller, men jeg synes det er bedre for å enklere skille mellom `get_users()` og `create_user()`.
+Hvis vi ikke spesifiserer noen metode vil Flask anta at det skal være GET, det er derfor `_home` og `_static` ikke trenger noe methods argument. `get_users()` må ikke ha det heller, men jeg synes det er bedre for å enklere skille mellom `get_users()` og `create_user()`.
 
 Så returnerer vi listen med brukere, pakket inn et dictionary. I denne versjonen av vi ikke en ordentlig database, bare en liste med python dictionaries. Et python-dictionary har samme form som et JSON-objekt, og derfor vil automatisk konvertere til JSON når vi returnerer et dictionary.
 
@@ -160,10 +160,46 @@ def get_users():
     return wrap_data(users)
 ```
 
-### Oppgave: Implementere GET posts
+### Oppgave: Implementere get_posts som GET til /posts
 
-Din oppgave er å implementere 
+Din oppgave er å implementere `get_posts` til returnere alle innlegg tilsvarende `get_users`. Legg til et eksempel-innlegg øverst i filen på samme måte som 
 
 ### POST users
 
-### Oppgave: Implementere POST posts
+Metoden `create_user()` er litt mer komplisert. I `app.route` bruker vi samme URL, men har methods=["POST"] istendenfor "GET". Variablen `request` blir automatisk opprettet av Flask, og innholder den innkommende requesten fra nettsiden. Vi henter ut JSON-bodyen fra requesten med `request.get_json()`. Under er det lagt inn en enkel sjekk på den innkommende brukeren før vi lagrer den. Den er ikke like avansert som sjekken på gorest.co.in. Det er helt opp til serveren å definere hva som er "gyldig" input er for noe.
+
+(Kode funfact: Hvis vi hadde gjort content["field"] og "field" ikke er med i content, vil vi få en `KeyError`. Men! I en `if`-setning med `or` trenger bare én av de to være sanne for at hele if-setningen er sann. Derfor, hvis `( field not in content.keys )` er sant, blir  `( content[field] == "" )` aldri kjørt, fordi datamaskinen allerede er fornøyd med at setningen i sin helhet er sann. Derfor får vi ingen `KeyError`.)
+
+På samme måte som før gjør Flask dictionary om til JSON automatisk. Hvis vi setter et komma etter retur-JSON kan vi også sette retur-koden. I `get_users()` satte vi ingen returkode, og derfor ble den til `200 OK` automatisk.
+
+Merk at vi heller ikke sjekker noen token i denne serveren. På samme måte som det er helt opp til serveren hva som er gyldig input, er det helt opp til serveren hva den krever av autentisering.
+
+```python
+@app.route('/api/users', methods=["POST"])
+def create_user():
+    content = request.get_json()
+
+    # Gå gjennom alle feltene vi krever i en user ressurs:
+    for field in user_fields:
+        # Hvis feltet ikke er med i input, eller det er en tom streng,
+        if ( field not in content.keys ) or ( content[field] == "" ):
+            # Gi feilmelding i 400-serien, BAD CLIENT INPUT
+            return {"message", "missing field: %s".format(field)}, 400
+
+    # Legg til ny bruker i bruker-database
+    created_user = add_element(users, content)
+    print(content)
+    # Returner den ny-opprettede brukeren, med statuskode 201 CREATED
+    return wrap_data(created_user), 201
+```
+
+### Oppgave: Implementere create_post som POST til /posts
+
+Din oppgave er å implementere `get_posts` til returnere alle innlegg tilsvarende `get_users`. Legg til kun enkel sjekk av inputen.
+
+## Bonus-oppgaver om du er ferdig:
+
+Noen ting du kan legge til i koden om du er ferdig:
+* Mer avansert sjekking av input, for eksempel sjekke at `status` enten er `active` eller `inactive`.
+* Sjekke at `userId` i innlegget i `create_post` tilhører en bruker som finnes.
+* Legge til `get_user()` for en spesifikk bruker med URL `'api/users/<id>'` hvor id er id-en på brukeren man vil ha tilbake. Hint: sjekk `_static(path)` for hvordan man bruker en url-verdi i en metode.

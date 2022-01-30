@@ -28,13 +28,14 @@ def _home():
 @app.route('/<path:path>')
 def _static(path):
     """Serve content from the static directory"""
-    if os.path.isdir(safe_join(static, path)):
-        path = os.path.join(path, 'index.html')
     return send_from_directory(static, path)
 
 @app.route('/api/hello-world')
 def hello():
     return 'Hello, World!'
+
+#  USERS Resource:
+user_fields = ["name", "email", "gender", "status"]
 
 @app.route('/api/users', methods=["GET"])
 def get_users():
@@ -43,9 +44,21 @@ def get_users():
 @app.route('/api/users', methods=["POST"])
 def create_user():
     content = request.get_json()
+
+    # Gå gjennom alle feltene vi krever i en user ressurs:
+    for field in user_fields:
+        # Hvis feltet ikke er med i input, eller det er en tom streng
+        if field not in content.keys or content[field] == "":
+            # Gi feilmelding i 400-serien, BAD CLIENT INPUT
+            return {"message", "missing field: %s".format(field)}, 400
+
+    # Legg til ny bruker i bruker-database
     created_user = add_element(users, content)
     print(content)
-    return wrap_data(created_user)
+    # Returner den ny-opprettede brukeren, med statuskode 201 CREATED
+    return wrap_data(created_user), 201
+
+# POSTS Resource:
 
 def get_posts():
     pass # FYLL INN HER
