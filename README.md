@@ -183,10 +183,10 @@ def create_user():
 
     # Gå gjennom alle feltene vi krever i en user ressurs:
     for field in user_fields:
-        # Hvis feltet ikke er med i input, eller det er en tom streng,
-        if ( field not in content.keys ) or ( content[field] == "" ):
+        # Hvis feltet ikke er med i input, eller det er en tom streng
+        if ( field not in content.keys() ) or ( content[field] == "" ):
             # Gi feilmelding i 400-serien, BAD CLIENT INPUT
-            return {"message", "missing field: %s".format(field)}, 400
+            return {"message": "missing field: '%s'" % field}, 400
 
     # Legg til ny bruker i bruker-database
     created_user = add_element(users, content)
