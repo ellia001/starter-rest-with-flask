@@ -59,9 +59,25 @@ def create_user():
     return wrap_data(created_user), 201
 
 # /posts Resource:
+post_fields = ["userid", "title", "body"]
 
-def get_posts():
-    pass # FYLL INN HER
+@app.route('/api/posts', methods=["GET"])
+def get_post():
+    return wrap_data(posts)
 
+@app.route('/api/posts', methods=["POST"])
 def create_post():
-    pass # FYLL INN HER
+        content = request.get_json()
+
+        # Gå gjennom alle feltene vi krever i en user ressurs:
+        for field in post_fields:
+            # Hvis feltet ikke er med i input, eller det er en tom streng
+            if ( field not in content.keys() ) or ( content[field] == "" ):
+                # Gi feilmelding i 400-serien, BAD CLIENT INPUT
+                return {"message": "missing field: '%s'" % field}, 400
+
+        # Legg til ny bruker i bruker-database
+        created_post = add_element(posts, content)
+        print(content)
+        # Returner den ny-opprettede brukeren, med statuskode 201 CREATED
+        return wrap_data(create_post), 201   
