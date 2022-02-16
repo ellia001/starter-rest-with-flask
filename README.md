@@ -206,3 +206,4 @@ Noen ting du kan legge til i koden om du er ferdig:
 * Sjekke at `userId` i innlegget i `create_post` tilhører en bruker som finnes.
 * Legge til `get_user()` for en spesifikk bruker med URL `'api/users/<id>'` hvor id er id-en på brukeren man vil ha tilbake. Hint: sjekk `_static(path)` for hvordan man bruker en url-verdi i en metode.
 # REST-API-Serversiden
+# REST-API-Serversiden
